@@ -41,7 +41,17 @@ def scrapData(urlList):
                     dataset = line.text
             
             case 'arb':
-                pass
+
+                time.sleep(0.31)
+
+                driver.get(str(url[1]))
+
+                WebDriverWait(driver, 10, 2.2)
+
+                data.extend(driver.find_elements('id', 'ContentPlaceHolder1_divTxFee'))
+
+                for line in data:
+                    dataset = line.text
 
             case 'matic':
                 pass
