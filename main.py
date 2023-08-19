@@ -1,7 +1,6 @@
 import readCsv as rc
 import scrapTxs as st
 
-
 def askInt(toAsk, incorrectMessage="Error: Invalid entry", possibleAnswear=False):
     while True:
         try:
