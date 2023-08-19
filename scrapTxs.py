@@ -28,48 +28,35 @@ def scrapData(urlList):
         match urlList[i][0]:
             case 'eth':
 
-                # Wait 0.31s to avoid ban while browsing blocks
-                time.sleep(0.31)
-
-                driver.get(str(url[1]))
-
-                WebDriverWait(driver, 10, 2.2)
-
-                data.extend(driver.find_elements('id', 'ContentPlaceHolder1_divTxFee'))
-
-                for line in data:
-                    dataset = line.text
+                dataset = constructorScrap(driver, data, dataset, url)
             
             case 'arb':
 
-                time.sleep(0.31)
-
-                driver.get(str(url[1]))
-
-                WebDriverWait(driver, 10, 2.2)
-
-                data.extend(driver.find_elements('id', 'ContentPlaceHolder1_divTxFee'))
-
-                for line in data:
-                    dataset = line.text
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'matic':
-                pass
+
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'base':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'avax':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'op':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'zora':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'bsc':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'metis':
                 pass
@@ -140,6 +127,20 @@ def scrapData(urlList):
 
     # except:
     #     print('Error while proccessing a block')
+
+def constructorScrap(driver, data, dataset, url, findElem='id', elem='ContentPlaceHolder1_divTxFee'):
+
+    time.sleep(0.31)
+    driver.get(str(url[1]))
+
+    WebDriverWait(driver, 10, 2.2)
+
+    data.extend(driver.find_elements(findElem, elem))
+
+    for line in data:
+        dataset = line.text
+    
+    return dataset
 
 def writeToCsv(data):
     # Set the filename for the CSV file
