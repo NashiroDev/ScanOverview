@@ -45,15 +45,21 @@ def buildFeedback(panel):
         if '_' in key:
             stat['total'] += stat[key]
 
-    stat['totalEth'], stat['totalMatic'], stat['totalBnb'] = float(0), float(0), float(0)
+    stat['totalEth'], stat['totalMatic'], stat['totalBnb'], stat['totalFtm'], stat['totalXdai'], stat['totalAvax'] = float(0), float(0), float(0), float(0), float(0), float(0)
     for key in stat.keys():
         if '_' not in key:
-            if key not in ['matic', 'bsc', 'total', 'totalEth', 'totalMatic', 'totalBnb']:
+            if key not in ['matic', 'bsc', 'ftm', 'xdai', 'avax', 'total', 'totalEth', 'totalMatic', 'totalBnb', 'totalFtm', 'totalXdai', 'totalAvax']:
                 stat['totalEth'] += stat[key]
             elif key == 'matic':
                 stat['totalMatic'] += stat[key]
             elif key == 'bsc':
                 stat['totalBnb'] += stat[key]
+            elif key == 'ftm':
+                stat['totalFtm'] += stat[key]
+            elif key == 'xdai':
+                stat['totalXdai'] += stat[key]
+            elif key == 'avax':
+                stat['totalAvax'] += stat[key]
 
     return stat
 
