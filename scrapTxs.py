@@ -20,8 +20,6 @@ def scrapData(urlList):
     # try:
     for i in range(len(urlList)):
 
-        print(urlList[i][1])
-
         # Construct the URL for the block page
         url = urlList[i]
 
@@ -52,7 +50,7 @@ def scrapData(urlList):
 
             case 'zora':
                 
-                dataset = constructorScrap(driver, data, dataset, url)
+                pass
 
             case 'bsc':
                 
@@ -122,10 +120,9 @@ def scrapData(urlList):
                 pass
 
         # Advancment feedback in terminal
-        if i % 10 == 0:
+        if i % 25 == 0:
             print(f"{i}/{len(urlList)} Transactions scalped")
 
-        print(dataset)
         # Call writeToCsv method to save current block data
         writeToCsv(dataset.split("\n"))
 
@@ -136,7 +133,7 @@ def scrapData(urlList):
 
 def constructorScrap(driver, data, dataset, url, findElem='id', elem='ContentPlaceHolder1_divTxFee', mode=0):
 
-    time.sleep(0.31)
+    time.sleep(0.32)
     driver.get(str(url[1]))
 
     WebDriverWait(driver, 10, 2.2)
@@ -149,7 +146,7 @@ def constructorScrap(driver, data, dataset, url, findElem='id', elem='ContentPla
                 dataset = line.text
     else:
         for line in data:
-            dataset = line.text
+            dataset = line.text + str(url[0])
     
     return dataset
 
