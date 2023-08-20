@@ -50,7 +50,6 @@ def buildFeedback(panel):
         if '_' not in key:
             if key not in ['matic', 'bsc', 'total', 'totalEth', 'totalMatic', 'totalBnb']:
                 stat['totalEth'] += stat[key]
-                print(stat[key])
             elif key == 'matic':
                 stat['totalMatic'] += stat[key]
             elif key == 'bsc':

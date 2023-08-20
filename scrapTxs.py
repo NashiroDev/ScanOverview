@@ -12,11 +12,12 @@ def scrapData(urlList):
     # Create a Service object
     s = Service(executable_path=path_to_chromedriver)
 
-    # op = webdriver.ChromeOptions()
-    # op.add_argument('headless')
+    op = webdriver.ChromeOptions()
+
+    op.add_argument("--headless=new")
 
     # Pass the Service object to the Chrome constructor
-    driver = webdriver.Chrome(service=s)
+    driver = webdriver.Chrome(service=s, options=op)
 
     data, dataset = [], ""
 
@@ -136,12 +137,13 @@ def scrapData(urlList):
 
 def constructorScrap(driver, data, dataset, url, findElem='id', elem='ContentPlaceHolder1_divTxFee', mode=0):
 
-    time.sleep(0.32)
     driver.get(str(url[1]))
 
-    WebDriverWait(driver, 10, 2.2)
-
+    time.sleep(0.32)
+    
     data.extend(driver.find_elements(findElem, elem))
+
+    WebDriverWait(driver, 10, 0.6)
 
     if mode:
         for line in data:
