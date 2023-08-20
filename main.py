@@ -1,5 +1,6 @@
 import readCsv as rc
 import scrapTxs as st
+import maths as m
 
 def askInt(toAsk, incorrectMessage="Error: Invalid entry", possibleAnswear=False):
     while True:
@@ -49,6 +50,8 @@ if __name__ == "__main__":
         # print(test, test[:], test[1:], len(test))
         st.scrapData(urlList[1:])
     else: 
-        pass
-        
+        scrapedData = rc.read_dataset('Scraped.csv')
+        data = m.cleanup(scrapedData)
+        panel = m.getStatistics(data)
+        print(m.buildFeedback(panel))
     

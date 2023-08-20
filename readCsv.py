@@ -15,10 +15,5 @@ def read_dataset(filename):
     dataset = list()
     for line in data:
         dataset.append(line.replace('\n', ''))
-    # data = data.split('\n')
-    print(dataset)
-    return dataset
 
-# a = read_dataset('Scraped.csv')
-# for x in a:
-#     print(x)
+    return dataset
