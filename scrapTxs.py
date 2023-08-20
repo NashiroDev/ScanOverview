@@ -28,48 +28,35 @@ def scrapData(urlList):
         match urlList[i][0]:
             case 'eth':
 
-                # Wait 0.31s to avoid ban while browsing blocks
-                time.sleep(0.31)
-
-                driver.get(str(url[1]))
-
-                WebDriverWait(driver, 10, 2.2)
-
-                data.extend(driver.find_elements('id', 'ContentPlaceHolder1_divTxFee'))
-
-                for line in data:
-                    dataset = line.text
+                dataset = constructorScrap(driver, data, dataset, url)
             
             case 'arb':
 
-                time.sleep(0.31)
-
-                driver.get(str(url[1]))
-
-                WebDriverWait(driver, 10, 2.2)
-
-                data.extend(driver.find_elements('id', 'ContentPlaceHolder1_divTxFee'))
-
-                for line in data:
-                    dataset = line.text
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'matic':
-                pass
+
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'base':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'avax':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'op':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'zora':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'bsc':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'metis':
                 pass
@@ -84,19 +71,22 @@ def scrapData(urlList):
                 pass
 
             case 'linea':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'pze':
                 pass
 
             case 'nova':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'celo':
                 pass
 
             case 'core':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url, 'class name', "el-row power-description", 1)
 
             case 'kava':
                 pass
@@ -108,13 +98,16 @@ def scrapData(urlList):
                 pass
             
             case 'fuse':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url, 'class name', "col-sm-9 col-lg-10", 1)
 
             case 'xdai':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'ftm':
-                pass
+                
+                dataset = constructorScrap(driver, data, dataset, url)
 
             case 'movr':
                 pass
@@ -141,6 +134,25 @@ def scrapData(urlList):
     # except:
     #     print('Error while proccessing a block')
 
+def constructorScrap(driver, data, dataset, url, findElem='id', elem='ContentPlaceHolder1_divTxFee', mode=0):
+
+    time.sleep(0.31)
+    driver.get(str(url[1]))
+
+    WebDriverWait(driver, 10, 2.2)
+
+    data.extend(driver.find_elements(findElem, elem))
+
+    if mode:
+        for line in data:
+            if 'Transaction Fee' in line.text:
+                dataset = line.text
+    else:
+        for line in data:
+            dataset = line.text
+    
+    return dataset
+
 def writeToCsv(data):
     # Set the filename for the CSV file
     filename = f'Scraped.csv'
@@ -155,7 +167,10 @@ def writeToCsv(data):
         # If the file doesn't exist, write the header row
         if file_exists:
             for elem in data:
-                toWrite += elem.replace(':', '') + '/'
+                if len(data) > 1:
+                    if elem != data[0]:
+                        toWrite += elem.replace(':', '') + '/'
+                else: toWrite += elem.replace(':', '') + '/'
             try:
                 if toWrite != '/':
                     file.write(toWrite + '\n')

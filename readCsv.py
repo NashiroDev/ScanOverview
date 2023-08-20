@@ -8,3 +8,7 @@ def read_file(filename):
         dataset.append(line.split(','))
     
     return dataset
+
+a = read_file('0x05525cde529c5212f1eab7f033146c8cc103cd5d_history.csv')
+for x in a:
+    print(x[4])
